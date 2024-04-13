@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  DeleteDateColumn,
 } from "typeorm";
+
 import { Order } from "./Order";
 
 @Entity()
@@ -13,28 +15,36 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    default: null,
+  })
   name: string;
 
-  @Column()
+  @Column({
+    default: null,
+  })
   email: string;
 
-  @Column()
+  @Column({
+    default: null,
+  })
   password: string;
 
-  @Column()
+  @Column({
+    default: null,
+  })
   role: string;
 
-  @OneToMany(type => Order, order => order.user)
+  @OneToMany((type) => Order, (order) => order.user)
   orders: Order[];
 
-  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({
-    type: "timestamp",
-    default: () => "CURRENT_TIMESTAMP",
-    onUpdate: "CURRENT_TIMESTAMP",
-  })
+  @UpdateDateColumn()
+  updatedDate: Date;
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

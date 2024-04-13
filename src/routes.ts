@@ -25,4 +25,5 @@ export const Routes = [
     controller: UserController,
     action: "remove",
   },
+  
 ];

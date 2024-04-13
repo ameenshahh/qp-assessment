@@ -7,6 +7,7 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  DeleteDateColumn,
 } from "typeorm";
 import { User } from "./User";
 import { Grocery } from "./Grocery";
@@ -15,21 +16,21 @@ import { Grocery } from "./Grocery";
 export class Order {
   @PrimaryGeneratedColumn()
   id: number;
-  
+
   @ManyToOne((type) => User, (user) => user.id)
   user: User;
 
-  @ManyToMany(type => Grocery, grocery => grocery.orders)
+  @ManyToMany((type) => Grocery, (grocery) => grocery.orders)
   @JoinTable()
   items: Grocery[];
 
-  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({
-    type: "timestamp",
-    default: () => "CURRENT_TIMESTAMP",
-    onUpdate: "CURRENT_TIMESTAMP",
-  })
+  @UpdateDateColumn()
+  updatedDate: Date;
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

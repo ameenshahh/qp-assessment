@@ -1,31 +1,38 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany } from "typeorm"
-import { Order } from "./Order"
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToMany,
+  DeleteDateColumn,
+} from "typeorm";
+import { Order } from "./Order";
 
 @Entity()
 export class Grocery {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number
+  @Column()
+  item: string;
 
-    @Column()
-    item: string
+  @Column()
+  category: string;
 
-    @Column()
-    category: string
+  @Column()
+  stocks: number;
 
-    @Column()
-    stocks: number
+  @ManyToMany((type) => Order, (order) => order.items)
+  orders: Order[];
 
-    @ManyToMany(type => Order, order => order.items)
-    orders: Order[];
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-    createdAt: Date;
-  
-    @UpdateDateColumn({
-      type: "timestamp",
-      default: () => "CURRENT_TIMESTAMP",
-      onUpdate: "CURRENT_TIMESTAMP",
-    })
-    updatedAt: Date;
+  @UpdateDateColumn()
+  updatedDate: Date;
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }
