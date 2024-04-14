@@ -17,9 +17,9 @@ export default async ({
     grocery.stockUnit = stockUnit;
     grocery.price = price;
 
-    const userRepository = AppDataSource.getRepository(Grocery);
+    const groceryRepository = AppDataSource.getRepository(Grocery);
 
-    return await userRepository.save(grocery);
+    return await groceryRepository.save(grocery);
   } catch (error) {
     throw error;
   }
