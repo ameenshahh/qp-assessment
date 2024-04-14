@@ -24,6 +24,9 @@ export class Order {
   @JoinTable()
   items: Grocery[];
 
+  @Column()
+  totalAmount: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

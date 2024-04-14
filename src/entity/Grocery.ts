@@ -23,6 +23,12 @@ export class Grocery {
   @Column()
   stocks: number;
 
+  @Column()
+  stockUnit: string;
+
+  @Column()
+  price: number;
+
   @ManyToMany((type) => Order, (order) => order.items)
   orders: Order[];
 

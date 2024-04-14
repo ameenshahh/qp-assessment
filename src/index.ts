@@ -5,7 +5,9 @@ import { AppDataSource } from "./data-source";
 import { Routes } from "./routes";
 import { User } from "./entity/User";
 import { authRouter } from "./auth/router";
-import 'dotenv/config';
+import "dotenv/config";
+import { groceryRouter } from "./grocery/router";
+import createAdmin from "./auth/lib/createAdmin";
 
 AppDataSource.initialize()
   .then(async () => {
@@ -18,6 +20,7 @@ AppDataSource.initialize()
     });
 
     app.use("/auth", authRouter);
+    app.use("/grocery", groceryRouter);
 
     // register express routes from defined application routes
     // Routes.forEach((route) => {
@@ -64,5 +67,6 @@ AppDataSource.initialize()
     console.log(
       "Express server has started on port 3000. Open http://localhost:3000/users to see results"
     );
+    createAdmin();
   })
   .catch((error) => console.log(error));

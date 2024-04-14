@@ -7,6 +7,7 @@ export default async (req: Request, res: Response) => {
   const responder = new Responder(res);
 
   let { email, password } = req.body;
+  let role = "user";
 
   try {
     // Checking for existing user
@@ -18,7 +19,7 @@ export default async (req: Request, res: Response) => {
       });
     }
 
-    let createdUser = await createUser({ email, password });
+    let createdUser = await createUser({ email, password, role });
 
     if (createUser) {
       responder.success({

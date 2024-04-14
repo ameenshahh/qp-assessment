@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Responder from "../shared/responder";
-import checkExistingUser from "../auth/lib/checkExistingUser";
+import getUserById from "../auth/lib/getUserById";
 import { verifyToken } from "../auth/lib/jwt";
 
 export default async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +17,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const decoded = verifyToken(accessToken);
-    const user = await checkExistingUser(decoded.id);
+    const user = await getUserById(decoded.id);
 
     if (!user) return responder.unauthorized({ message: "No user exists" });
 
