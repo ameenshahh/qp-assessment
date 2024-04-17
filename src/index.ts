@@ -7,12 +7,13 @@ import { User } from "./entity/User";
 import { authRouter } from "./auth/router";
 import "dotenv/config";
 import { groceryRouter } from "./grocery/router";
+import { orderRouter } from "./order/router";
 import createAdmin from "./auth/lib/createAdmin";
+const app = express();
 
 AppDataSource.initialize()
   .then(async () => {
     // create express app
-    const app = express();
     app.use(bodyParser.json());
 
     app.get("/", (req: Request, res: Response) => {
@@ -21,48 +22,10 @@ AppDataSource.initialize()
 
     app.use("/auth", authRouter);
     app.use("/grocery", groceryRouter);
-
-    // register express routes from defined application routes
-    // Routes.forEach((route) => {
-    //   (app as any)[route.method](
-    //     route.route,
-    //     (req: Request, res: Response, next: Function) => {
-    //       const result = new (route.controller as any)()[route.action](
-    //         req,
-    //         res,
-    //         next
-    //       );
-    //       if (result instanceof Promise) {
-    //         result.then((result) =>
-    //           result !== null && result !== undefined
-    //             ? res.send(result)
-    //             : undefined
-    //         );
-    //       } else if (result !== null && result !== undefined) {
-    //         res.json(result);
-    //       }
-    //     }
-    //   );
-    // });
-
-    // setup express app here
-    // ...
+    app.use("/order", orderRouter);
 
     // start express server
     app.listen(3000);
-
-    // insert new users for test
-    // await AppDataSource.manager.save(
-    //   AppDataSource.manager.create(User, {
-    //     name: "Timber",
-    //   })
-    // );
-
-    // await AppDataSource.manager.save(
-    //   AppDataSource.manager.create(User, {
-    //     name: "Phantom",
-    //   })
-    // );
 
     console.log(
       "Express server has started on port 3000. Open http://localhost:3000/users to see results"
@@ -70,3 +33,5 @@ AppDataSource.initialize()
     createAdmin();
   })
   .catch((error) => console.log(error));
+
+  export default app

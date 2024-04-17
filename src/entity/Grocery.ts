@@ -6,8 +6,9 @@ import {
   UpdateDateColumn,
   ManyToMany,
   DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
-import { Order } from "./Order";
+import { OrderItem } from "./OrderItem";
 
 @Entity()
 export class Grocery {
@@ -29,8 +30,8 @@ export class Grocery {
   @Column()
   price: number;
 
-  @ManyToMany((type) => Order, (order) => order.items)
-  orders: Order[];
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.groceryId)
+  orderItem: OrderItem[];
 
   @CreateDateColumn()
   createdAt: Date;

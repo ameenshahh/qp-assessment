@@ -8,9 +8,10 @@ import {
   ManyToMany,
   JoinTable,
   DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
 import { User } from "./User";
-import { Grocery } from "./Grocery";
+import { OrderItem } from "./OrderItem";
 
 @Entity()
 export class Order {
@@ -20,9 +21,8 @@ export class Order {
   @ManyToOne((type) => User, (user) => user.id)
   user: User;
 
-  @ManyToMany((type) => Grocery, (grocery) => grocery.orders)
-  @JoinTable()
-  items: Grocery[];
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.orderId)
+  orderItems: OrderItem[];
 
   @Column()
   totalAmount: number;
