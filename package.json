@@ -22,6 +22,7 @@
    },
    "scripts": {
       "start": "ts-node src/index.ts",
+      "prod": "node build/index.js",
       "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs"
    }

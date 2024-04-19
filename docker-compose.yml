@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  #Mysql
+  mysql_db:
+    container_name: db_container
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: question_pro_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  api:
+    container_name: app_container
+    build: .
+    ports:
+      - 4000:3000 
+    environment:
+      PASSWORD_HASH_SECRET: questionprosecret
+      JWT_SECRET: questionprojwtsecret
+      DB_TYPE: mysql
+      DB_HOST: mysql_db
+      DB_PORT: 3307
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_NAME: question_pro_db
+      ADMIN_EMAIL: admin@questionpro.com
+      ADMIN_password: password@admin
+    depends_on:
+      - mysql_db
+
+volumes:
+  mysql-data: {}

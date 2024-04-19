@@ -9,6 +9,7 @@ import "dotenv/config";
 import { groceryRouter } from "./grocery/router";
 import { orderRouter } from "./order/router";
 import createAdmin from "./auth/lib/createAdmin";
+import "dotenv/config.js";
 const app = express();
 
 AppDataSource.initialize()
